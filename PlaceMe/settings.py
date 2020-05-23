@@ -25,7 +25,7 @@ SECRET_KEY = 'g(_b^i9$jn8g$l*hyuwotm%0m6vhjt7k)u&xgqbu!(e79-!1j*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['soetplacemeapp.herokuapp.com']
 
 
 # Application definition

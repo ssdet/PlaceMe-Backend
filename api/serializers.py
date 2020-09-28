@@ -24,7 +24,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
     class Meta:
         model = UserProfile
-        fields = ['mobile', 'image', 'age', 'gender_choices','user']
+        fields = ['mobile', 'image', 'age', 'gender','user']
 
 
 

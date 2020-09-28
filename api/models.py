@@ -19,7 +19,7 @@ class UserProfile(models.Model):
 	gender = models.CharField(max_length=2, choices=gender_choices, default = default)
 	IsConfirmed = models.BooleanField(default = False)
 	def __str__(self):
-		return self.IsConfirmed
+		return str(self.user.username)
 
 class Department(models.Model):
 	Name = models.CharField(max_length=256, default = 'NULL')

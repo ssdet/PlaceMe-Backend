@@ -24,6 +24,27 @@ class UserProfileView(APIView):
 		serializer = UserProfileSerializer(userprofiles, many=True) #json
 		return Response(data= serializer.data)
 
+	def post(self, request, format= None):
+		user = self.request.user
+		params = self.request.data
+		serialized = UserProfileSerializer(data= params)
+		if serialized.is_valid():
+			mobile = serialized.data['mobile']
+			image = serialized.data['image']
+			age = serialized.data['age']
+			gender = serialized.data['gender']
+
+			userProfile = UserProfile.objects.create(
+				user = user,
+				mobile = mobile,
+				image = image,
+				age = age,
+				gender = gender
+				)
+			return Response(data = serialized.data)
+		else:
+			return Response(data="Invalid Data", status = status.HTTP_400_BAD_REQUEST)
+
 @method_decorator(AllowedUserGroup(allowed_roles = ['FAC']), name='list')
 @method_decorator(ApprovedUser, name='list')
 class StudentViewSet(viewsets.ModelViewSet):
@@ -46,7 +67,7 @@ class StudentViewSet(viewsets.ModelViewSet):
 class RegisterStudentView(APIView):
 	def post(self, request, format = None):
 		user = self.request.user
-		params = self.request.query_params
+		params = self.request.data
 		serialized = StudentSerializer(data = params)
 		if serialized.is_valid():
 			user = self.request.user
@@ -77,7 +98,7 @@ class RegisterStudentView(APIView):
 class RegisterFacultyView(APIView):
 	def post(self, request, format = None):
 		user = self.request.user
-		params = self.request.query_params
+		params = self.request.data
 		serialized = FacultySerializer(data = params)
 		if serialized.is_valid():
 			user = self.request.user
@@ -101,7 +122,7 @@ class RegisterFacultyView(APIView):
 class RegisterHRView(APIView):
 	def post(self, request, format = None):
 		user = self.request.user
-		params = self.request.query_params
+		params = self.request.data
 		serialized = HRSerializer(data = params)
 		if serialized.is_valid():
 			user = self.request.user
@@ -128,3 +149,8 @@ class ApproveStudentView(APIView):
 		if serialized.is_valid():
 			dept = Department.objects.get(id= params['dept'])
 			students = Student.objects.filter(Q(dept = dept))
+
+
+
+
+
